@@ -11,7 +11,7 @@ export interface Fighter {
   image: string;
   wins: number;
   losses: number;
-  last5: string;
+  last5: number;
   slpm: number;
   strAcc: number;
   sapm: number;
@@ -40,8 +40,9 @@ const Index = () => {
   };
  
   useEffect(() => {
+    if (!selectedWeightClass) return;
     const fetchFighters = async () => {
-      const response = await fetch(`http://localhost:5000/api/fighters/${selectedWeightClass}`);
+      const response = await fetch(`http://localhost:5001/api/fighters?weight_class=${selectedWeightClass}`);
       const data = await response.json();
       setFighters(data);
     }
@@ -68,7 +69,7 @@ const Index = () => {
               <div>
                 <label className="block text-sm font-medium mb-2">Fighter 1</label>
                 <FighterSelector
-                  weightClass={selectedWeightClass}
+                  fighters={fighters}
                   selectedFighter={fighter1}
                   onFighterSelect={setFighter1}
                   excludeFighter={fighter2}
@@ -78,7 +79,7 @@ const Index = () => {
               <div>
                 <label className="block text-sm font-medium mb-2">Fighter 2</label>
                 <FighterSelector
-                  weightClass={selectedWeightClass}
+                  fighters={fighters}
                   selectedFighter={fighter2}
                   onFighterSelect={setFighter2}
                   excludeFighter={fighter1}

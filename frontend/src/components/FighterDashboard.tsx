@@ -12,64 +12,42 @@ interface FighterDashboardProps {
 
 interface PredictionResult {
   winner: Fighter;
-  confidence: number;
-  winProbability: number;
-  method: string;
+  fighter1WinProb: number;
+  fighter2WinProb: number;
   round: number;
 }
 
 export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) => {
   const [prediction, setPrediction] = useState<PredictionResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const simulatePrediction = async () => {
+    const fetchPrediction = async () => {
       setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      const fighter1Score = calculateFighterScore(fighter1);
-      const fighter2Score = calculateFighterScore(fighter2);
-      
-      const winner = fighter1Score > fighter2Score ? fighter1 : fighter2;
-      const confidence = Math.abs(fighter1Score - fighter2Score) / Math.max(fighter1Score, fighter2Score) * 100;
-      const winProbability = fighter1Score > fighter2Score 
-        ? (fighter1Score / (fighter1Score + fighter2Score)) * 100
-        : (fighter2Score / (fighter1Score + fighter2Score)) * 100;
-      
-      setPrediction({
-        winner,
-        confidence: Math.min(confidence, 85),
-        winProbability,
-        method: getRandomMethod(),
-        round: Math.floor(Math.random() * 5) + 1
-      });
-      
-      setIsLoading(false);
+      setError(null);
+      try {
+        const response = await fetch('http://localhost:5001/api/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fighter1: fighter1.name, fighter2: fighter2.name }),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Prediction failed');
+        setPrediction({
+          winner: data.predicted_winner.toLowerCase() === fighter1.name.toLowerCase() ? fighter1 : fighter2,
+          fighter1WinProb: data.fighter1_win_prob,
+          fighter2WinProb: data.fighter2_win_prob,
+          round: data.predicted_round,
+        });
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
-
-    simulatePrediction();
+    fetchPrediction();
   }, [fighter1, fighter2]);
-
-  const calculateFighterScore = (fighter: Fighter): number => {
-    const winRate = fighter.wins / (fighter.wins + fighter.losses);
-    const recentForm = fighter.last5.split('').filter(r => r === 'W').length / 5;
-    
-    return (
-      winRate * 30 +
-      recentForm * 20 +
-      fighter.strAcc * 15 +
-      fighter.strDef * 10 +
-      fighter.tdDef * 10 +
-      (fighter.ranking ? (10 - fighter.ranking) * 2 : 0) +
-      fighter.kdAvg * 5 +
-      fighter.subAvg * 3
-    );
-  };
-
-  const getRandomMethod = (): string => {
-    const methods = ["Decision", "TKO/KO", "Submission"];
-    return methods[Math.floor(Math.random() * methods.length)];
-  };
 
   if (isLoading) {
     return (
@@ -79,6 +57,15 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
           <h3 className="text-2xl font-bold">Analyzing Fight Data...</h3>
           <p className="text-muted-foreground">Processing statistical features through ML model</p>
         </div>
+      </Card>
+    );
+  }
+
+  if (error) {
+    return (
+      <Card className="p-8 text-center bg-card">
+        <p className="text-red-500 font-medium">Prediction error: {error}</p>
+        <p className="text-muted-foreground text-sm mt-2">Make sure both fighters are in the database.</p>
       </Card>
     );
   }
@@ -136,33 +123,33 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Striking Accuracy</span>
-                  <span className="font-bold">{(fighter1.strAcc * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter1.strAcc).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter1.strAcc * 100} className="h-2" />
+                <Progress value={fighter1.strAcc} className="h-2" />
               </div>
               
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Striking Defense</span>
-                  <span className="font-bold">{(fighter1.strDef * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter1.strDef).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter1.strDef * 100} className="h-2" />
+                <Progress value={fighter1.strDef} className="h-2" />
               </div>
 
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Takedown Defense</span>
-                  <span className="font-bold">{(fighter1.tdDef * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter1.tdDef).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter1.tdDef * 100} className="h-2" />
+                <Progress value={fighter1.tdDef} className="h-2" />
               </div>
 
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Takedown Accuracy</span>
-                  <span className="font-bold">{(fighter1.tdAcc * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter1.tdAcc).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter1.tdAcc * 100} className="h-2" />
+                <Progress value={fighter1.tdAcc} className="h-2" />
               </div>
             </div>
 
@@ -183,20 +170,12 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               </div>
             </div>
 
-            <div className="text-center">
-              <span className="text-muted-foreground text-sm">Last 5 Fights</span>
-              <div className="flex justify-center space-x-1 mt-1">
-                {fighter1.last5.split('').map((result, index) => (
-                  <span 
-                    key={index}
-                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                      result === 'W' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
-                    }`}
-                  >
-                    {result}
-                  </span>
-                ))}
+            <div>
+              <div className="flex justify-between text-sm mb-1">
+                <span>Last 5 Wins</span>
+                <span className="font-bold">{fighter1.last5}/5</span>
               </div>
+              <Progress value={(fighter1.last5 / 30) * 100} className="h-2" />
             </div>
           </div>
         </Card>
@@ -247,33 +226,33 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Striking Accuracy</span>
-                  <span className="font-bold">{(fighter2.strAcc * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter2.strAcc).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter2.strAcc * 100} className="h-2" />
+                <Progress value={fighter2.strAcc} className="h-2" />
               </div>
               
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Striking Defense</span>
-                  <span className="font-bold">{(fighter2.strDef * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter2.strDef).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter2.strDef * 100} className="h-2" />
+                <Progress value={fighter2.strDef} className="h-2" />
               </div>
 
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Takedown Defense</span>
-                  <span className="font-bold">{(fighter2.tdDef * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter2.tdDef).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter2.tdDef * 100} className="h-2" />
+                <Progress value={fighter2.tdDef} className="h-2" />
               </div>
 
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>Takedown Accuracy</span>
-                  <span className="font-bold">{(fighter2.tdAcc * 100).toFixed(1)}%</span>
+                  <span className="font-bold">{(fighter2.tdAcc).toFixed(1)}%</span>
                 </div>
-                <Progress value={fighter2.tdAcc * 100} className="h-2" />
+                <Progress value={fighter2.tdAcc} className="h-2" />
               </div>
             </div>
 
@@ -294,20 +273,12 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               </div>
             </div>
 
-            <div className="text-center">
-              <span className="text-muted-foreground text-sm">Last 5 Fights</span>
-              <div className="flex justify-center space-x-1 mt-1">
-                {fighter2.last5.split('').map((result, index) => (
-                  <span 
-                    key={index}
-                    className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                      result === 'W' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'
-                    }`}
-                  >
-                    {result}
-                  </span>
-                ))}
+            <div>
+              <div className="flex justify-between text-sm mb-1">
+                <span>Last 5 Wins</span>
+                <span className="font-bold">{fighter2.last5}/5</span>
               </div>
+              <Progress value={(fighter2.last5 / 30) * 100} className="h-2" />
             </div>
           </div>
         </Card>
@@ -326,14 +297,11 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             
             <div className="grid grid-cols-3 gap-4 items-center">
               <div className="text-right font-bold text-2xl text-primary">
-                {prediction.winner.id === fighter1.id ? prediction.winProbability.toFixed(1) : (100 - prediction.winProbability).toFixed(1)}%
+                {prediction.fighter1WinProb.toFixed(1)}%
               </div>
-              <Progress 
-                value={prediction.winner.id === fighter1.id ? prediction.winProbability : 100 - prediction.winProbability} 
-                className="h-4"
-              />
+              <Progress value={prediction.fighter1WinProb} className="h-4" />
               <div className="text-left font-bold text-2xl text-primary">
-                {prediction.winner.id === fighter2.id ? prediction.winProbability.toFixed(1) : (100 - prediction.winProbability).toFixed(1)}%
+                {prediction.fighter2WinProb.toFixed(1)}%
               </div>
             </div>
           </div>
@@ -353,10 +321,10 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
           )}
           <div className="flex justify-center space-x-4 text-sm">
             <Badge variant="secondary" className="bg-white/20">
-              {prediction.confidence.toFixed(1)}% Confidence
+              {prediction.winner.id === fighter1.id ? prediction.fighter1WinProb : prediction.fighter2WinProb}% Win Probability
             </Badge>
             <Badge variant="secondary" className="bg-white/20">
-              {prediction.method} - R{prediction.round}
+              Predicted Round {prediction.round === 6 ? "- Decision" : prediction.round}
             </Badge>
           </div>
         </Card>
