@@ -90,9 +90,9 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               <p className="text-primary font-medium">"{fighter1.nickname}"</p>
             )}
             <p className="text-muted-foreground">{fighter1.record}</p>
-            {fighter1.ranking && (
+            {fighter1.ranking !== undefined && fighter1.ranking !== null && (
               <Badge variant="secondary" className="mt-2">
-                #{fighter1.ranking} Ranked
+                {fighter1.ranking === 0 ? "Champion" : `#${fighter1.ranking} Ranked`}
               </Badge>
             )}
           </div>
@@ -193,9 +193,9 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               <p className="text-primary font-medium">"{fighter2.nickname}"</p>
             )}
             <p className="text-muted-foreground">{fighter2.record}</p>
-            {fighter2.ranking && (
+            {fighter2.ranking !== undefined && fighter2.ranking !== null && (
               <Badge variant="secondary" className="mt-2">
-                #{fighter2.ranking} Ranked
+                {fighter2.ranking === 0 ? "Champion" : `#${fighter2.ranking} Ranked`}
               </Badge>
             )}
           </div>
