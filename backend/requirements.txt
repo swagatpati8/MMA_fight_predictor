@@ -1,0 +1,10 @@
+flask
+flask-sqlalchemy
+flask-cors
+sqlalchemy
+python-dotenv==1.0.1
+scikit-learn
+joblib
+pandas
+psycopg2-binary==2.9.9
+gunicorn
