@@ -42,7 +42,7 @@ const Index = () => {
   useEffect(() => {
     if (!selectedWeightClass) return;
     const fetchFighters = async () => {
-      const response = await fetch(`http://localhost:5001/api/fighters?weight_class=${selectedWeightClass}`);
+      const response = await fetch(`https://mmafightpredictor-production.up.railway.app/api/fighters?weight_class=${selectedWeightClass}`);
       const data = await response.json();
       setFighters(data);
     }

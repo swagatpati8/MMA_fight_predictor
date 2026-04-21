@@ -27,7 +27,7 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch('http://localhost:5001/api/predict', {
+        const response = await fetch('https://mmafightpredictor-production.up.railway.app/api/predict', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ fighter1: fighter1.name, fighter2: fighter2.name }),
