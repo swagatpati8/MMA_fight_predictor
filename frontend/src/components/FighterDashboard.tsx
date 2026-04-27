@@ -111,7 +111,7 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               </div>
               <div>
                 <span className="text-muted-foreground">Height</span>
-                <p className="font-bold">{Math.floor(fighter1.height / 12)}'{fighter1.height % 12}"</p>
+                <p className="font-bold">{(fighter1.height / 100).toFixed(2)} m</p>
               </div>
               <div>
                 <span className="text-muted-foreground">Reach</span>
@@ -173,7 +173,7 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             <div>
               <div className="flex justify-between text-sm mb-1">
                 <span>Last 5 Wins</span>
-                <span className="font-bold">{fighter1.last5}/5</span>
+                <span className="font-bold">{fighter1.last5}/30</span>
               </div>
               <Progress value={(fighter1.last5 / 30) * 100} className="h-2" />
             </div>
@@ -214,7 +214,7 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               </div>
               <div>
                 <span className="text-muted-foreground">Height</span>
-                <p className="font-bold">{Math.floor(fighter2.height / 12)}'{fighter2.height % 12}"</p>
+                <p className="font-bold">{(fighter2.height / 100).toFixed(2)} m</p>
               </div>
               <div>
                 <span className="text-muted-foreground">Reach</span>
@@ -276,7 +276,7 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             <div>
               <div className="flex justify-between text-sm mb-1">
                 <span>Last 5 Wins</span>
-                <span className="font-bold">{fighter2.last5}/5</span>
+                <span className="font-bold">{fighter2.last5}/30</span>
               </div>
               <Progress value={(fighter2.last5 / 30) * 100} className="h-2" />
             </div>

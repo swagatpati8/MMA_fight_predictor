@@ -5,6 +5,7 @@ export const Navbar = () => {
 
   const navLinks = [
     { name: "PREDICTOR", path: "/" },
+    { name: "PAST PREDICTIONS", path: "/past-predictions" },
     { name: "RANKINGS", path: "/rankings" },
   ];
 
