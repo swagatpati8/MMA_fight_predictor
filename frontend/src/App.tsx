@@ -7,6 +7,7 @@ import { Navbar } from "./components/Navbar";
 import Index from "./pages/Index";
 import Rankings from "./pages/Rankings";
 import PastPredictions from "./pages/PastPredictions";
+import Predictions from "./pages/Predictions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/past-predictions" element={<PastPredictions />} />
+          <Route path="/predictions" element={<Predictions />} />
           <Route path="/rankings" element={<Rankings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
