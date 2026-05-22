@@ -11,6 +11,7 @@ import os
 
 
 from routes.predict import predict_bp
+from routes.fighter_selector import fighter_selector_bp
 
 # Load .env from project root
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
@@ -28,6 +29,7 @@ with app.app_context():
 
 
 app.register_blueprint(predict_bp)
+app.register_blueprint(fighter_selector_bp)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
