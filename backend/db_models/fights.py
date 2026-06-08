@@ -44,3 +44,5 @@ class Fight(db.Model):
     round_finished = db.Column(db.Integer)               # Round fight ended
     fight_rounds = db.Column(db.Integer)                 # Total rounds fought
     outcome = db.Column(db.Integer)                      # Outcome (0 = undecided, 1 = fighter1 win, 2 = fighter2 win)
+    fighter1_prev_weight_class = db.Column(db.String(50))
+    fighter2_prev_weight_class = db.Column(db.String(50))
