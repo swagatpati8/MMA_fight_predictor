@@ -26,7 +26,6 @@ interface FuturePrediction {
   modelPick: string | null;
   confidence: number | null;
   notes: string;
-  betPlaced: boolean;
 }
 
 const pastPredictions: PastPrediction[] = [
@@ -121,32 +120,7 @@ const pastPredictions: PastPrediction[] = [
   },
 ];
 
-const futurePredictions: FuturePrediction[] = [
-  {
-    date: "Jun 14, 2026",
-    event: "UFC Freedom 250",
-    fighter1: "Diego Lopes",
-    fighter2: "Steve Garcia",
-    userPick: "Diego Lopes",
-    modelPick: "Diego Lopes",
-    confidence: 63.4,
-    notes:
-      "Model favored Lopes on ranking, age-to-prime, and TD accuracy. Garcia had real KDAvg edge (2.36 vs 0.63) and higher volume in a 3-round fight. Lopes won — model got direction right but the fight was closer than 63% suggests.",
-    betPlaced: false,
-  },
-  {
-    date: "May 3, 2025",
-    event: "UFC Fight Night",
-    fighter1: "Jack Della Maddalena",
-    fighter2: "Carlos Prates",
-    userPick: "Jack Della Maddalena",
-    modelPick: null,
-    confidence: null,
-    notes:
-      "Model skipped — at the time KDAvg dominated the weights and would have favored Prates. JDM has fought elite competition (Islam, Belal) and is the superior boxer. Human override: JDM by decision.",
-    betPlaced: true,
-  },
-];
+const futurePredictions: FuturePrediction[] = [];
 
 const Predictions = () => {
   const [activeTab, setActiveTab] = useState<"past" | "future">("past");
@@ -296,11 +270,6 @@ const Predictions = () => {
                       <p className="text-xs text-muted-foreground">
                         {p.event} · {p.date}
                       </p>
-                      {p.betPlaced && (
-                        <Badge className="bg-yellow-600 hover:bg-yellow-600 text-xs">
-                          BET PLACED
-                        </Badge>
-                      )}
                     </div>
                     <p className="font-bold text-xl mb-4">
                       {p.fighter1}{" "}
