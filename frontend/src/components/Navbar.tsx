@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { Twitter } from "lucide-react";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -12,7 +13,8 @@ export const Navbar = () => {
   return (
     <nav className="bg-card border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center h-14">
+        <div className="flex items-center justify-between h-14">
+          <div className="flex-1" />
           <div className="flex space-x-8">
             {navLinks.map((link) => (
               <Link
@@ -30,6 +32,16 @@ export const Navbar = () => {
                 )}
               </Link>
             ))}
+          </div>
+          <div className="flex-1 flex justify-end">
+            <a
+              href="https://x.com/ufcpredict0r"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground hover:text-primary transition-colors"
+            >
+              <Twitter size={18} />
+            </a>
           </div>
         </div>
       </div>

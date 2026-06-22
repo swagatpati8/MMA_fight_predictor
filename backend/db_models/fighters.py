@@ -23,6 +23,8 @@ class Fighters(db.Model):
     height = db.Column(db.Float)                # Height (m) of fighter 1
     reach = db.Column(db.Integer)                 # Reach (cm) of fighter 1
     weight_class = db.Column(db.String(50))              # Weight class (e.g., "185")
+    prev_weight_class = db.Column(db.String(50))         # Previous weight class (if moved up/down)
+    five_rd_dec_wins = db.Column(db.Integer, default=0)  # Number of 5-round decision wins
     str_head_pct = db.Column(db.Float)               # % of strikes aimed at head
     str_body_pct = db.Column(db.Float)               # % of strikes aimed at body
     str_leg_pct = db.Column(db.Float)                # % of strikes aimed at legs
