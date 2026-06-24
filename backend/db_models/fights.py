@@ -46,3 +46,5 @@ class Fight(db.Model):
     outcome = db.Column(db.Integer)                      # Outcome (0 = undecided, 1 = fighter1 win, 2 = fighter2 win)
     fighter1_prev_weight_class = db.Column(db.String(50))
     fighter2_prev_weight_class = db.Column(db.String(50))
+    fighter1_five_rd_dec_wins = db.Column(db.Integer, default=0)
+    fighter2_five_rd_dec_wins = db.Column(db.Integer, default=0)

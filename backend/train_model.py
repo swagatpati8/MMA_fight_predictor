@@ -57,12 +57,15 @@ df['age_distance_diff']     = df['fighter1_age_distance'] - df['fighter2_age_dis
 df['height_diff'] = df['fighter1_height'] - df['fighter2_height']
 df['reach_diff']  = df['fighter1_reach']  - df['fighter2_reach']
 
+df['five_rd_dec_wins_diff'] = df['fighter1_five_rd_dec_wins'] - df['fighter2_five_rd_dec_wins']
+
 FEATURES = [
     'wins_diff', 'losses_diff', 'last5_diff',
     'SLpM_diff', 'StrAcc_diff', 'SApM_diff', 'StrDef_diff',
     'TDAvg_diff', 'TDAcc_diff', 'TDDef_diff',
     'SubAvg_diff', 'KDAvg_diff', 'ranking_diff',
     'age_distance_diff', 'height_diff', 'reach_diff',
+    'five_rd_dec_wins_diff',
 ]
 
 X = df[FEATURES]
