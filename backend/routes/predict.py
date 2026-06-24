@@ -46,6 +46,7 @@ def build_features(f1, f2):
         'age_distance_diff':  f1_age_dist - f2_age_dist,
         'height_diff':        f1.height   - f2.height,
         'reach_diff':         f1.reach    - f2.reach,
+        'five_rd_dec_wins_diff': (f1.five_rd_dec_wins or 0) - (f2.five_rd_dec_wins or 0),
     }
     return pd.DataFrame([row])[FEATURES]
 
