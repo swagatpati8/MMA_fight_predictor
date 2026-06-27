@@ -215,7 +215,7 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
 
           <div className="space-y-4">
             {/* Basic */}
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-4 text-sm text-center">
               <div>
                 <span className="text-muted-foreground">Wins</span>
                 <p className="font-bold text-lg">{fighter2.wins}</p>
