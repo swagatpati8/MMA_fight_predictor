@@ -184,7 +184,7 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             <div>
               <div className="flex justify-between text-sm mb-1">
                 <span>Last 5 Wins</span>
-                <span className="font-bold">{fighter1.last5}/30</span>
+                <span className="font-bold">{Math.round((fighter1.last5 / 30) * 100)}%</span>
               </div>
               <Progress value={(fighter1.last5 / 30) * 100} className="h-2" />
             </div>
