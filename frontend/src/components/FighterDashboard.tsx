@@ -121,11 +121,14 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             </div>
 
             <Separator />
-            <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Striking</p>
-            <div className="grid grid-cols-2 gap-4 text-center text-sm mb-2">
+            <div className="grid grid-cols-3 gap-4 text-center text-sm">
               <div>
                 <span className="text-muted-foreground block">SLpM</span>
                 <span className="font-bold">{fighter1.slpm}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground block">SApM</span>
+                <span className="font-bold">{fighter1.sapm}</span>
               </div>
               <div>
                 <span className="text-muted-foreground block">KD Avg</span>
@@ -142,12 +145,6 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Str Absorbed/min</span>
-                  <span className="font-bold">{fighter1.sapm}</span>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
                   <span>Str Defense</span>
                   <span className="font-bold">{fighter1.strDef.toFixed(1)}%</span>
                 </div>
@@ -156,18 +153,17 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             </div>
 
             <Separator />
-            <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Grappling</p>
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-4 text-center text-sm">
-                <div>
-                  <span className="text-muted-foreground block">TD Avg</span>
-                  <span className="font-bold">{fighter1.tdAvg}</span>
-                </div>
-                <div>
-                  <span className="text-muted-foreground block">Sub Avg</span>
-                  <span className="font-bold">{fighter1.subAvg}</span>
-                </div>
+            <div className="grid grid-cols-2 gap-4 text-center text-sm">
+              <div>
+                <span className="text-muted-foreground block">TD Avg</span>
+                <span className="font-bold">{fighter1.tdAvg}</span>
               </div>
+              <div>
+                <span className="text-muted-foreground block">Sub Avg</span>
+                <span className="font-bold">{fighter1.subAvg}</span>
+              </div>
+            </div>
+            <div className="space-y-3">
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>TD Accuracy</span>
@@ -239,11 +235,14 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             </div>
 
             <Separator />
-            <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Striking</p>
-            <div className="grid grid-cols-2 gap-4 text-center text-sm mb-2">
+            <div className="grid grid-cols-3 gap-4 text-center text-sm">
               <div>
                 <span className="text-muted-foreground block">SLpM</span>
                 <span className="font-bold">{fighter2.slpm}</span>
+              </div>
+              <div>
+                <span className="text-muted-foreground block">SApM</span>
+                <span className="font-bold">{fighter2.sapm}</span>
               </div>
               <div>
                 <span className="text-muted-foreground block">KD Avg</span>
@@ -260,12 +259,6 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Str Absorbed/min</span>
-                  <span className="font-bold">{fighter2.sapm}</span>
-                </div>
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1">
                   <span>Str Defense</span>
                   <span className="font-bold">{fighter2.strDef.toFixed(1)}%</span>
                 </div>
@@ -274,18 +267,17 @@ export const FighterDashboard = ({ fighter1, fighter2 }: FighterDashboardProps) 
             </div>
 
             <Separator />
-            <p className="text-xs font-bold tracking-widest text-muted-foreground uppercase">Grappling</p>
-            <div className="space-y-3">
-              <div className="grid grid-cols-2 gap-4 text-center text-sm">
-                <div>
-                  <span className="text-muted-foreground block">TD Avg</span>
-                  <span className="font-bold">{fighter2.tdAvg}</span>
-                </div>
-                <div>
-                  <span className="text-muted-foreground block">Sub Avg</span>
-                  <span className="font-bold">{fighter2.subAvg}</span>
-                </div>
+            <div className="grid grid-cols-2 gap-4 text-center text-sm">
+              <div>
+                <span className="text-muted-foreground block">TD Avg</span>
+                <span className="font-bold">{fighter2.tdAvg}</span>
               </div>
+              <div>
+                <span className="text-muted-foreground block">Sub Avg</span>
+                <span className="font-bold">{fighter2.subAvg}</span>
+              </div>
+            </div>
+            <div className="space-y-3">
               <div>
                 <div className="flex justify-between text-sm mb-1">
                   <span>TD Accuracy</span>
