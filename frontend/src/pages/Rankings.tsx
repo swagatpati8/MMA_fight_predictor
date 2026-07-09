@@ -7,7 +7,7 @@ interface RankedFighter {
 const goatList: RankedFighter[] = [
   { rank: 1, name: "Anderson Silva", score: 1797.7 },
   { rank: 2, name: "Georges St-Pierre", score: 1790.0 },
-  { rank: 3, name: "Jon Jones", score: 1787.3 },
+  { rank: 3, name: "Jon Jones", score: 1788.9 },
   { rank: 4, name: "Islam Makhachev", score: 1773.7 },
   { rank: 5, name: "Daniel Cormier", score: 1767.2 },
   { rank: 6, name: "Max Holloway", score: 1735.3 },
@@ -26,15 +26,15 @@ const goatList: RankedFighter[] = [
   { rank: 19, name: "Aljamain Sterling", score: 1703.3 },
   { rank: 20, name: "Luke Rockhold", score: 1702.5 },
   { rank: 21, name: "Khamzat Chimaev", score: 1698.8 },
-  { rank: 22, name: "Israel Adesanya", score: 1695.5 },
-  { rank: 23, name: "Magomed Ankalaev", score: 1689.7 },
-  { rank: 24, name: "Alex Pereira", score: 1688.5 },
+  { rank: 22, name: "Israel Adesanya", score: 1698.1 },
+  { rank: 23, name: "Alex Pereira", score: 1691.1 },
+  { rank: 24, name: "Magomed Ankalaev", score: 1689.4 },
   { rank: 25, name: "Dricus Du Plessis", score: 1687.1 },
   { rank: 26, name: "Francis Ngannou", score: 1686.5 },
   { rank: 27, name: "Sean O'Malley", score: 1682.3 },
   { rank: 28, name: "Alexandre Pantoja", score: 1676.9 },
-  { rank: 29, name: "Robert Whittaker", score: 1674.2 },
-  { rank: 30, name: "Dominick Cruz", score: 1673.8 },
+  { rank: 29, name: "Dominick Cruz", score: 1673.8 },
+  { rank: 30, name: "Robert Whittaker", score: 1673.3 },
 ];
 
 const Rankings = () => {
