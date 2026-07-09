@@ -1,169 +1,97 @@
-import { Card } from "@/components/ui/card";
-
 interface RankedFighter {
   rank: number;
   name: string;
-  change?: { direction: "up" | "down"; positions: number };
+  score: number;
 }
 
-interface RankingCategory {
-  title: string;
-  titleHighlight?: string;
-  champion: {
-    name: string;
-    nickname?: string;
-  };
-  fighters: RankedFighter[];
-}
-
-const p4pRankings: RankingCategory = {
-  title: "MEN'S POUND-FOR-POUND",
-  titleHighlight: "TOP RANK",
-  champion: { name: "ISLAM MAKHACHEV" },
-  fighters: [
-    { rank: 1, name: "Islam Makhachev" },
-    { rank: 2, name: "Ilia Topuria" },
-    { rank: 3, name: "Khamzat Chimaev" },
-    { rank: 4, name: "Alex Pereira" },
-    { rank: 5, name: "Alexander Volkanovski" },
-    { rank: 6, name: "Petr Yan" },
-    { rank: 7, name: "Merab Dvalishvili" },
-    { rank: 8, name: "Tom Aspinall" },
-    { rank: 9, name: "Alexandre Pantoja" },
-    { rank: 10, name: "Max Holloway" },
-    { rank: 11, name: "Joshua Van", change: { direction: "up", positions: 1 } },
-    { rank: 12, name: "Dricus Du Plessis", change: { direction: "down", positions: 1 } },
-    { rank: 13, name: "Magomed Ankalaev" },
-    { rank: 14, name: "Sean O'Malley" },
-    { rank: 15, name: "Charles Oliveira" },
-  ],
-};
-
-const topStrikers: RankingCategory = {
-  title: "TOP STRIKERS",
-  titleHighlight: "STRIKING RANK",
-  champion: { name: "ALEX PEREIRA", nickname: "Poatan" },
-  fighters: [
-    { rank: 1, name: "Alex Pereira" },
-    { rank: 2, name: "Ilia Topuria" },
-    { rank: 3, name: "Max Holloway" },
-    { rank: 4, name: "Justin Gaethje" },
-    { rank: 5, name: "Sean O'Malley" },
-    { rank: 6, name: "Israel Adesanya" },
-    { rank: 7, name: "Dustin Poirier" },
-    { rank: 8, name: "Jiri Prochazka" },
-    { rank: 9, name: "Petr Yan" },
-    { rank: 10, name: "Alexander Volkanovski" },
-    { rank: 11, name: "Ciryl Gane" },
-    { rank: 12, name: "Conor McGregor" },
-    { rank: 13, name: "Jamahal Hill" },
-    { rank: 14, name: "Cory Sandhagen" },
-    { rank: 15, name: "Brandon Moreno" },
-  ],
-};
-
-const topGrapplers: RankingCategory = {
-  title: "TOP GRAPPLERS",
-  titleHighlight: "GRAPPLING RANK",
-  champion: { name: "ISLAM MAKHACHEV" },
-  fighters: [
-    { rank: 1, name: "Islam Makhachev" },
-    { rank: 2, name: "Khamzat Chimaev" },
-    { rank: 3, name: "Charles Oliveira" },
-    { rank: 4, name: "Merab Dvalishvili" },
-    { rank: 5, name: "Alexandre Pantoja" },
-    { rank: 6, name: "Belal Muhammad" },
-    { rank: 7, name: "Brandon Moreno" },
-    { rank: 8, name: "Bo Nickal" },
-    { rank: 9, name: "Sean Brady", change: { direction: "up", positions: 2 } },
-    { rank: 10, name: "Arman Tsarukyan" },
-    { rank: 11, name: "Demian Maia" },
-    { rank: 12, name: "Gilbert Burns" },
-    { rank: 13, name: "Mackenzie Dern" },
-    { rank: 14, name: "Bryce Mitchell", change: { direction: "down", positions: 1 } },
-    { rank: 15, name: "Ryan Hall" },
-  ],
-};
-
-const RankingColumn = ({ category }: { category: RankingCategory }) => {
-  return (
-    <div className="flex-1 min-w-[280px]">
-      {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-primary text-xs font-bold tracking-wider">
-            {category.title}
-          </span>
-          {category.titleHighlight && (
-            <span className="text-foreground text-xs font-bold tracking-wider">
-              {category.titleHighlight}
-            </span>
-          )}
-        </div>
-        <h2 className="text-2xl font-black tracking-tight leading-tight">
-          {category.champion.name}
-        </h2>
-        <p className="text-muted-foreground text-xs font-medium tracking-wider mt-1">
-          CHAMPION
-        </p>
-      </div>
-
-      {/* Champion placeholder image area */}
-      <div className="h-32 bg-gradient-to-b from-muted to-transparent mb-4 rounded flex items-center justify-center">
-        <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center">
-          <span className="text-2xl font-bold text-muted-foreground">
-            {category.champion.name.split(' ').map(n => n[0]).join('')}
-          </span>
-        </div>
-      </div>
-
-      {/* Rankings list */}
-      <div className="space-y-0">
-        {category.fighters.map((fighter) => (
-          <div
-            key={fighter.rank}
-            className="flex items-center py-3 border-b border-border/50 hover:bg-muted/30 transition-colors group"
-          >
-            <span className="w-8 text-muted-foreground font-bold text-sm">
-              {fighter.rank}
-            </span>
-            <span className="flex-1 font-medium text-sm group-hover:text-primary transition-colors">
-              {fighter.name}
-            </span>
-            {fighter.change && (
-              <div className="flex items-center gap-1 text-xs">
-                <span
-                  className={
-                    fighter.change.direction === "up"
-                      ? "text-green-500"
-                      : "text-red-500"
-                  }
-                >
-                  {fighter.change.direction === "up" ? "▲" : "▼"}
-                </span>
-                <span className="text-muted-foreground">
-                  {fighter.change.positions}
-                </span>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+const goatList: RankedFighter[] = [
+  { rank: 1, name: "Anderson Silva", score: 1797.7 },
+  { rank: 2, name: "Georges St-Pierre", score: 1790.0 },
+  { rank: 3, name: "Jon Jones", score: 1787.3 },
+  { rank: 4, name: "Islam Makhachev", score: 1773.7 },
+  { rank: 5, name: "Daniel Cormier", score: 1767.2 },
+  { rank: 6, name: "Max Holloway", score: 1735.3 },
+  { rank: 7, name: "Kamaru Usman", score: 1731.5 },
+  { rank: 8, name: "Jose Aldo", score: 1730.4 },
+  { rank: 9, name: "Khabib Nurmagomedov", score: 1729.7 },
+  { rank: 10, name: "Alexander Volkanovski", score: 1727.2 },
+  { rank: 11, name: "Dustin Poirier", score: 1723.9 },
+  { rank: 12, name: "Merab Dvalishvili", score: 1723.6 },
+  { rank: 13, name: "Demetrious Johnson", score: 1721.0 },
+  { rank: 14, name: "Donald Cerrone", score: 1719.4 },
+  { rank: 15, name: "Charles Oliveira", score: 1718.9 },
+  { rank: 16, name: "Ilia Topuria", score: 1716.8 },
+  { rank: 17, name: "Leon Edwards", score: 1716.1 },
+  { rank: 18, name: "Stipe Miocic", score: 1704.0 },
+  { rank: 19, name: "Aljamain Sterling", score: 1703.3 },
+  { rank: 20, name: "Luke Rockhold", score: 1702.5 },
+  { rank: 21, name: "Khamzat Chimaev", score: 1698.8 },
+  { rank: 22, name: "Israel Adesanya", score: 1695.5 },
+  { rank: 23, name: "Magomed Ankalaev", score: 1689.7 },
+  { rank: 24, name: "Alex Pereira", score: 1688.5 },
+  { rank: 25, name: "Dricus Du Plessis", score: 1687.1 },
+  { rank: 26, name: "Francis Ngannou", score: 1686.5 },
+  { rank: 27, name: "Sean O'Malley", score: 1682.3 },
+  { rank: 28, name: "Alexandre Pantoja", score: 1676.9 },
+  { rank: 29, name: "Robert Whittaker", score: 1674.2 },
+  { rank: 30, name: "Dominick Cruz", score: 1673.8 },
+];
 
 const Rankings = () => {
+  const champion = goatList[0];
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="sr-only">MMA Fighter Rankings</h1>
+        <h1 className="sr-only">UFC GOAT List</h1>
 
-        {/* Rankings Grid - Similar to UFC layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-          <RankingColumn category={p4pRankings} />
-          <RankingColumn category={topStrikers} />
-          <RankingColumn category={topGrapplers} />
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <div className="mb-6">
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-primary text-xs font-bold tracking-wider">
+                UFC
+              </span>
+              <span className="text-foreground text-xs font-bold tracking-wider">
+                GOAT LIST
+              </span>
+            </div>
+            <h2 className="text-2xl font-black tracking-tight leading-tight">
+              {champion.name}
+            </h2>
+            <p className="text-muted-foreground text-xs font-medium tracking-wider mt-1">
+              #1 BY PEAK ELO
+            </p>
+          </div>
+
+          {/* Champion placeholder image area */}
+          <div className="h-32 bg-gradient-to-b from-muted to-transparent mb-4 rounded flex items-center justify-center">
+            <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center">
+              <span className="text-2xl font-bold text-muted-foreground">
+                {champion.name.split(' ').map(n => n[0]).join('')}
+              </span>
+            </div>
+          </div>
+
+          {/* Rankings list */}
+          <div className="space-y-0">
+            {goatList.map((fighter) => (
+              <div
+                key={fighter.rank}
+                className="flex items-center py-3 border-b border-border/50 hover:bg-muted/30 transition-colors group"
+              >
+                <span className="w-8 text-muted-foreground font-bold text-sm">
+                  {fighter.rank}
+                </span>
+                <span className="flex-1 font-medium text-sm group-hover:text-primary transition-colors">
+                  {fighter.name}
+                </span>
+                <span className="text-muted-foreground text-xs font-mono">
+                  {fighter.score.toFixed(1)}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

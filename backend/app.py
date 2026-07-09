@@ -4,7 +4,8 @@ from flask_cors import CORS
 from db_models import db
 
 from db_models.fights import Fight
-from db_models.fighters import Fighters 
+from db_models.fighters import Fighters
+from db_models.fights2 import Fight2
 
 from dotenv import load_dotenv
 import os
