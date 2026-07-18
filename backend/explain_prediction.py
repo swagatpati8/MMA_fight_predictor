@@ -50,6 +50,7 @@ def compute_features(f1, f2):
     row['age_distance_diff'] = abs(f1_age - PRIME_AGE) - abs(f2_age - PRIME_AGE)
     row['height_diff']  = f1['height'] - f2['height']
     row['reach_diff']   = f1['reach'] - f2['reach']
+    row['five_rd_dec_wins_diff'] = (f1.get('five_rd_dec_wins') or 0) - (f2.get('five_rd_dec_wins') or 0)
     return row
 
 if __name__ == "__main__":
