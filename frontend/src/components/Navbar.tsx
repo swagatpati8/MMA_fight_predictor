@@ -15,7 +15,7 @@ export const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-14">
           <div className="flex-1" />
-          <div className="flex space-x-8">
+          <div className="flex items-center space-x-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -32,8 +32,6 @@ export const Navbar = () => {
                 )}
               </Link>
             ))}
-          </div>
-          <div className="flex-1 flex justify-end">
             <a
               href="https://x.com/ufcpredict0r"
               target="_blank"
@@ -43,6 +41,7 @@ export const Navbar = () => {
               <Twitter size={18} />
             </a>
           </div>
+          <div className="flex-1" />
         </div>
       </div>
     </nav>
